@@ -21,15 +21,15 @@ class OrderController extends AbstractController
     {
         $orderedProductId = (int) ($request->query->get('id'));
         $order = new Order();
-        $order->setClientEmail('clientEmail');
         $order->addProduct($doctrine->getRepository(Product::class)->find($orderedProductId));
-        $order = $this->createFormBuilder($order)
+        $form = $this->createFormBuilder($order)
             ->add('clientEmail', TextType::class)
             ->add('quantity', IntegerType::class)
             ->add('makeOrder', SubmitType::class, ['label' => 'Make Order'])
             ->getForm();
-        return $this->renderForm('order/index.html.twig', [
-            'order'=> $order
+        $form->handleRequest($request);
+        return $this->render('order/index.html.twig', [
+            'form'=> $form->createView(),
         ]);
     }
 }

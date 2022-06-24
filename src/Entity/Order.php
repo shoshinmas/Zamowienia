@@ -22,11 +22,7 @@ class Order
     #[ORM\Column(type: 'string', length: 255)]
     private $status;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank()
-     * @Assert\GreaterThanOrEqual(1)
-     */
+    #[ORM\Column(type: 'integer')]
     private $quantity;
 
     #[ORM\OneToMany(mappedBy: 'orderIds', targetEntity: Product::class)]
