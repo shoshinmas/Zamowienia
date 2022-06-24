@@ -34,8 +34,7 @@ class OrderController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $order->setStatus("Pending");
-            $order->setTotalSum((int)('quantity'));
-            //$order->setClientEmail($data['clientEmail']);
+            $order->setTotalSum(1);
             $em->persist($order);
             $em->flush();
             //return $this->redirectToRoute('app_product');
