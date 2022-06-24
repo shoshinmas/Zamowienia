@@ -14,21 +14,12 @@
         {% for product in products %}
             <div class="col-md-4">
                 <div class="card mb-4">
+                    <a href="{{ path('app_order', {id: product.id}) }}">
                     <img src="https://via.placeholder.com/200x150" alt="{{ product.name }}" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <span class="h5 mt-auto">{{ product.price }} €</span>
-
-                        <div class="form-group">
-                            {{ form_start(form) }}
-                            <input name="{{ field_name(form.quantity) }}"
-                                   value="{{ field_value(form.quantity) }}"
-                                   class="form-control">
-                            {{ form_end(form) }}
-                        </div>
-
-                        </div>
-                    </div>
+                    </div></a>
                 </div>
             </div>
         {% endfor %}
