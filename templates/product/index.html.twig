@@ -18,6 +18,15 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <span class="h5 mt-auto">{{ product.price }} €</span>
+
+                        <div class="form-group">
+                            {{ form_start(form) }}
+                            <input name="{{ field_name(form.quantity) }}"
+                                   value="{{ field_value(form.quantity) }}"
+                                   class="form-control">
+                            {{ form_end(form) }}
+                        </div>
+
                         </div>
                     </div>
                 </div>
