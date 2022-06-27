@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Order;
 use App\Entity\Product;
-use App\Form\AddToCartType;
+use App\Entity\Order;
+use App\Form\Type\CartFormType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\BrowserKit\Request;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,20 +19,28 @@ class ProductController extends AbstractController
 
 
     #[Route(path: '/', name: 'app_product')]
-    public function index(ProductRepository $productRepository, Request $request, Product $product): Response
+    public function index(Request $request, EntityManagerInterface $em, ProductRepository $productRepository): Response
     {
-        $form = $this->createForm(Product::class);
-        //klasa rozszerzona z abstractForma
+        $order = new Order();
+        $order->setQuantity(2);
+        $form = $this->createForm(CartFormType::class, $order);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $quantitySum = 5;
+            var_dump($quantitySum);
             $order = $form->getData();
-            $order->setProduct($product);
-            return $this->redirectToRoute('app_order', ['id' => $product->getId()]);
+            $order
+                ->setStatus('pending')
+            ->setTotalSum(2);
+            $em->persist($order);
+            $em->flush();
+           // return $this->redirectToRoute('app_product', [$order]);
         }
         return $this->render('product/index.html.twig', [
             'controller_name' => 'ProductController',
             'products' => $productRepository->findAll(),
+            'order' => $order,
+            'form' => $form->createView()
         ]);
     }
 
