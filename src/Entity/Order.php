@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
@@ -30,6 +32,9 @@ class Order
 
     #[ORM\Column(type: 'string', length: 255)]
     private $clientEmail;
+
+    /*#[ORM\ManyToOne(mappedBy: 'orderIds', targetEntity: Product::class)]
+    private $orderRef;*/
 
     public function __construct()
     {
@@ -117,5 +122,22 @@ class Order
         $this->clientEmail = $clientEmail;
 
         return $this;
+    }
+
+   /* public function getOrderRef(): ?Order
+    {
+        return $this->orderRef;
+    }
+
+    public function setOrderRef(?Order $orderRef): self
+    {
+        $this->orderRef = $orderRef;
+
+        return $this;
+    }*/
+
+    public function getGeneralAmount(Product $product): int
+    {
+        return $this->quantity * $product->price;
     }
 }
