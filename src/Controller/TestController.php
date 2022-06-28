@@ -1,26 +1,22 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Controller;
 
-use App\Entity\Product;
 use App\Entity\Order;
 use App\Form\Type\CartFormType;
-use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ProductController extends AbstractController
+class TestController extends AbstractController
 {
-
-
-    #[Route(path: '/', name: 'app_product')]
-    public function index(Request $request, EntityManagerInterface $em, ProductRepository $productRepository): Response
+    #[Route(path: '/test', name: 'form_test')]
+    public function index(Request $request, EntityManagerInterface $em): Response
     {
+        $productTest = ['id'=> 001, 'name' => 'Blabla', 'price' => 100, 'visible' => TRUE ];
+        $productPrice = $productTest['price'];
         $form = $this->createForm(CartFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -30,11 +26,11 @@ class ProductController extends AbstractController
             $order->setTotalSum($pSum);
             $em->persist($order);
             $em->flush();
-           // return $this->redirectToRoute('app_product', [$order]);
+            // return $this->redirectToRoute('app_product', [$order]);
         }
-        return $this->render('product/index.html.twig', [
+        return $this->render('test/index.html.twig', [
             'controller_name' => 'ProductController',
-            'products' => $productRepository->findAll(),
+            'product' => $productTest,
             'form' => $form->createView()
         ]);
     }

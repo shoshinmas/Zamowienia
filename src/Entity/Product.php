@@ -22,7 +22,7 @@ class Product
     public $price;
 
     #[ORM\Column(type: 'boolean')]
-    private $visible;
+    private $visible = TRUE;
 
     #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'product')]
     private $orderIds;

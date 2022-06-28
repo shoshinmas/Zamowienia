@@ -10,8 +10,7 @@
     <div class="container">
         <h1 class="mt-3 mb-4">Products</h1>
         <div class="row">
-            <form class="mt-4 p-4 bg-light" method="post">
-            {% for product in products %}
+            {{ form_start(form, {'attr': {'class': 'mt-4 p-4 bg-light'}}) }}
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <img src="https://via.placeholder.com/200x150" alt="{{ product.name }}" class="card-img-top">
@@ -21,8 +20,11 @@
                                 <form class="mt-4 p-4 bg-light" method="post">
                                     <div class="form-group">
                                         <div class="form-group">
-                                            <label for="quantity">Quantity</label>
-                                            <input type="number" class="form-control" name="quantity[{{ product.id }}]">
+                                            {{ form_widget(form.quantity, {
+                                                'attr': {
+                                                    'class': 'form-control ' ~ (form.quantity.vars.valid ? '' : 'is-invalid')
+                                                }
+                                            }) }}
                                         </div>
                                     </div>
                                 <span class="h5 mt-auto">{{ product.price }} €</span>
@@ -30,13 +32,8 @@
                         </div>
                     </div>
                 </div><br><br>
-            {% endfor %}
-                <div class="form-group">
-                    <label for="clientEmail">Client Email</label>
-                    <input type="email" class="form-control" id="clientEmail" name="clientEmail">
-                </div>
-            <button class="btn btn-warning" for="submit" class="form-control" name="submit">Order</button>
-            </form>
+            {{ form_end(form) }}
+
         </div>
     </div>
 {% endblock %}

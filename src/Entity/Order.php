@@ -124,20 +124,8 @@ class Order
         return $this;
     }
 
-   /* public function getOrderRef(): ?Order
+    public function getGeneralAmount(int $sum): int
     {
-        return $this->orderRef;
-    }
-
-    public function setOrderRef(?Order $orderRef): self
-    {
-        $this->orderRef = $orderRef;
-
-        return $this;
-    }*/
-
-    public function getGeneralAmount(Product $product): int
-    {
-        return $this->quantity * $product->price;
+        return $this->quantity * $sum;
     }
 }
