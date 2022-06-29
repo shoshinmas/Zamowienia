@@ -10,22 +10,24 @@ class CreateOrderModel
 {
 
     public function __construct(
-        private readonly int $quantity,
-        private readonly string $title,
-        private readonly int $totalSum,
+        private string $clientEmail,
+        private $totalSum
     ) {
     }
 
     public static function fromRequest(Request $request): self
     {
+        $quantity = $_POST['product_id'];
+        $price = $_POST['product_price'];
+        $mapped = array_map(function($quantity, $price) { return $quantity * $price;}, $quantity, $price);
 
-        $data['clientEmail'] = $request->get('clientEmail');
-        $data['quantity'] = (int)($request->get('product_id'));
-        $data['totalSum'] = (int)($request->get('product_price'));
+        $totalSum = 0;
+        foreach($mapped as $sum) { $totalSum += $sum;}
+        $clientEmail = $request->get('clientEmail');
+
         return new self(
-            $data['quantity'],
-            $data['clientEmail'],
-            $data['totalSum']
+            $clientEmail,
+            $totalSum
         );
     }
 }

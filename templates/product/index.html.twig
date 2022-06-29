@@ -11,7 +11,6 @@
         <h1 class="mt-3 mb-4">Products</h1>
         <div class="row">
             {{ form_start(form) }}
-            <form class="mt-4 p-4 bg-light" method="post">
             {% for product in products %}
                 <div class="col-md-4">
                     <div class="card mb-4">
@@ -19,14 +18,13 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ product.name }}</h5>
                             <div class="d-flex justify-content-between align-item-center">
-                                <form class="mt-4 p-4 bg-light" method="post">
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label for="product.id">Quantity</label>
-                                            <input type="number" class="form-control" name="product.id" value="0">
+                                            <input type="number" class="form-control" name="product.id[]" value="0">
                                         </div>
                                     </div>
-                                <span class="h5 mt-auto"><input type="text" class="form-control" name="product.price" value="{{ product.price }}" size="1" readonly>EUR</span>
+                                <span class="h5 mt-auto"><input type="text" class="form-control" name="product.price[]" value="{{ product.price }}" size="1" readonly>EUR</span>
                             </div>
                         </div>
                     </div>
