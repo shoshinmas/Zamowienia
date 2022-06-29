@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
@@ -17,10 +19,10 @@ class Product
     private $name;
 
     #[ORM\Column(type: 'integer')]
-    private $price;
+    public $price;
 
     #[ORM\Column(type: 'boolean')]
-    private $visible;
+    private $visible = TRUE;
 
     #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'product')]
     private $orderIds;

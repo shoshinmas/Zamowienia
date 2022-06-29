@@ -1,29 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Entity\Order;
-use App\Entity\Product;
-use App\Form\AddToCartType;
+use App\Form\BaseType;
 use App\Repository\ProductRepository;
-use phpDocumentor\Reflection\Types\Integer;
+use App\UseCase\CreateOrder;
+use App\UseCase\CreateOrderModel;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\BrowserKit\Request;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
 
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly CreateOrder $createOrder
+    ){
+    }
 
-    #[Route(path: '/', name: 'app_product')]
-    public function index(ProductRepository $productRepository): Response
+    #[Route(path: '/', name: 'app_product', methods: ["GET", "POST"])]
+    public function index(Request $request): Response
     {
+        $form = $this->createForm(BaseType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->createOrder->execute(CreateOrderModel::fromRequest($request));
+        }
+
         return $this->render('product/index.html.twig', [
-            'controller_name' => 'ProductController',
-            'products' => $productRepository->findAll(),
+            'products' => $this->productRepository->findAll(),
+            'form' => $form->createView()
         ]);
     }
 }
