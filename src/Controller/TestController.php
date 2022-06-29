@@ -17,7 +17,8 @@ class TestController extends AbstractController
     {
         $productTest = ['id'=> 001, 'name' => 'Blabla', 'price' => 100, 'visible' => TRUE ];
         $productPrice = $productTest['price'];
-        $form = $this->createForm(CartFormType::class);
+        $productId = $productTest['id'];
+        $form = $this->createForm(CartFormType::class, $productId);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $order = $form->getData();

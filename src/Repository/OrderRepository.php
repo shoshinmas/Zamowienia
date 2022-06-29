@@ -64,4 +64,9 @@ class OrderRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function save(Order $order, bool $flush = true): void
+    {
+
+    }
+
 }

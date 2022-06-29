@@ -20,10 +20,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CartFormType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $builder->add('quantity', IntegerType::class, [1=>1]);
         $builder->add('clientEmail');
-        $builder->add('quantity');
         $builder->add('totalSum', HiddenType::class, [
             'empty_data'=>  0,
         ]);
