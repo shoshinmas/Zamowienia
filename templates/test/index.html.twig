@@ -20,11 +20,7 @@
                                 <form class="mt-4 p-4 bg-light" method="post">
                                     <div class="form-group">
                                         <div class="form-group">
-                                            {{ form_widget(form.quantity, {
-                                                'attr': {
-                                                    'class': 'form-control ' ~ (form.quantity.vars.valid ? '' : 'is-invalid')
-                                                }
-                                            }) }}
+                                            {{ form_widget(attribute(form, 'quantity' ~ product.id)) }}
                                         </div>
                                     </div>
                                 <span class="h5 mt-auto">{{ product.price }} €</span>
