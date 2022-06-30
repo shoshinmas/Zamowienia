@@ -12,9 +12,9 @@
         <h1>Below, the dashboard with clients' orders: ✅</h1>
 
         {% for order in orders %}
-            {{ order.id }}<br>
+            <a href="https://127.0.0.1:8000/order/{{ order.uuid }}">{{ order.id }}<br>
             {{ order.totalSUM }}<br>
-            {{ order.clientEmail }}<br><br><br>
+                {{ order.clientEmail }}<br>{{ order.totalSum }}</a><br><br>
         {% endfor %}
     </div>
 {% endblock %}
