@@ -8,6 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @extends ServiceEntityRepository<Order>
@@ -48,15 +49,15 @@ class OrderRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Order
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findOneByUuid(UuidInterface $uuid): ?Order
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.uuid = :uuid')
+            ->setParameter('uuid', $uuid)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
     public function save(Order $order, bool $flush = true): void
     {
         $this->getEntityManager()->persist($order);

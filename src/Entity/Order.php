@@ -137,4 +137,12 @@ class Order
     {
         return $this->uuid;
     }
+
+    public function setUuId(UuidInterface $uuid): self
+    {
+        $this->uuid = $uuid;
+        return $this;
+    }
+
+
 }

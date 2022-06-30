@@ -9,6 +9,7 @@ use App\Repository\ProductRepository;
 use App\UseCase\CreateOrder;
 use App\UseCase\CreateOrderModel;
 use Doctrine\ORM\EntityManagerInterface;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Form\Extension\Core\Type\UuidType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,9 +32,9 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $uuid = 'uuid';
-            $this->createOrder->execute(CreateOrderModel::fromRequest($request, $uuid));
-            return $this->redirectToRoute('app_order');
+            $uuid = Uuid::uuid4();
+            $this->createOrder->execute(CreateOrderModel::fromRequest($request, $uuid), $uuid);
+            return $this->redirectToRoute('app_order', ['externalId' => $uuid]);
         }
 
         return $this->render('product/index.html.twig', [

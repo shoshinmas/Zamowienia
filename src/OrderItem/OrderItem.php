@@ -2,12 +2,12 @@
 
 namespace App\OrderItem;
 
-use App\Entity\Order;
+use Ramsey\Uuid\UuidInterface;
 
 class OrderItem
 {
     public function __construct(
-        private int $externalId,
+        private UuidInterface $externalId,
         private string $title,
         private int $price,
         private int $quantity = 1,
@@ -19,7 +19,7 @@ class OrderItem
         $this->quantity++;
     }
 
-    public function getExternalId(): int
+    public function getExternalId(): UuidInterface
     {
         return $this->externalId;
     }

@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\UseCase;
 
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CreateOrderModel
 {
 
     public function __construct(
-        private string $orderUuid,
+        private UuidInterface $orderUuid,
         private array $id,
         private string $clientEmail,
         private array $quantity,
@@ -20,7 +21,7 @@ class CreateOrderModel
     }
 
 
-    public static function fromRequest(Request $request, string $orderUuid): self
+    public static function fromRequest(Request $request, UuidInterface $orderUuid): self
     {
         $id = $_POST['product_id'];
         $quantity = $_POST['product_quantity'];
@@ -66,7 +67,7 @@ class CreateOrderModel
         return $this->totalSum;
     }
 
-    public function getOrderUuid(): string
+    public function getOrderUuid(): UuidInterface
     {
         return $this->orderUuid;
     }

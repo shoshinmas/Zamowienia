@@ -21,14 +21,14 @@ class AppFixtures extends Fixture
             $product->setVisible(TRUE);
             $manager->persist($product);
         }
-        for ($i = 0; $i < 20; $i++) {
+        /*for ($i = 0; $i < 20; $i++) {
             $order = new Order();
             $order->setClientEmail('lala '.$i);
             $order->setTotalSum(mt_rand(10, 100));
             $order->setQuantity(mt_rand(10, 100));
             $order->setStatus('lala '.$i);
             $manager->persist($order);
-        }
+        }*/
 
         $manager->flush();
     }
