@@ -31,7 +31,7 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->createOrder->execute(CreateOrderModel::fromRequest($request));
-            //return $this->redirectToRoute('app_order');
+            return $this->redirectToRoute('app_order');
         }
 
         return $this->render('product/index.html.twig', [

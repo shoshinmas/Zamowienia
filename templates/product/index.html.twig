@@ -14,7 +14,7 @@
             {% for product in products %}
                 <div class="col-md-4">
                     <div class="card mb-4">
-                        <input type="hidden" class="form-control" id="product.id" name="product.id[]" value="{{ product.id }}">
+                        <input type="hidden" class="form-control" id="product.id" name="product.id[{{ product.id }}][id]" value="{{ product.id }}">
                         <img src="https://via.placeholder.com/200x150" alt="{{ product.name }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">{{ product.name }}</h5>
