@@ -1,0 +1,16 @@
+{% extends '@email/default/notification/body.html.twig' %}
+
+{% block content %}
+    <p>
+        {{ order.id }}<br>
+        {{ order.status }}<br>
+        {{ order.clientEmail }}<br>
+        {{ order.totalSum }}<br>
+        <br>
+    </p>
+{% endblock %}
+
+{% block action %}
+    <spacer size="16"></spacer>
+    <button href="https://127.0.0.1:8000/order/{{ order.uuid }}">Check your order</button>
+{% endblock %}
