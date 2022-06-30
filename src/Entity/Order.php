@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\OrderItem\OrderItem;
 use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Form\Extension\Core\Type\UuidType;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
@@ -18,6 +22,9 @@ class Order
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[ORM\Column(name: "uuid", type: "uuid", unique: true, nullable: true)]
+    private UuidInterface $uuid;
+
     #[ORM\Column(type: 'integer')]
     private $totalSum;
 
@@ -27,18 +34,15 @@ class Order
     #[ORM\Column(type: 'integer')]
     private $quantity;
 
-    #[ORM\OneToMany(mappedBy: 'orderIds', targetEntity: Product::class)]
-    private $product;
+    #[ORM\Column(name: "orderitem", type: 'array', nullable: true)]
+    private $orderItem = [];
 
     #[ORM\Column(type: 'string', length: 255)]
     private $clientEmail;
 
-    /*#[ORM\ManyToOne(mappedBy: 'orderIds', targetEntity: Product::class)]
-    private $orderRef;*/
-
     public function __construct()
     {
-        $this->product = new ArrayCollection();
+        $this->uuid = Uuid::uuid4();
     }
 
     public function getId(): ?int
@@ -82,34 +86,39 @@ class Order
         return $this;
     }
 
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getProduct(): Collection
+    public function getOrderItem(OrderItem $newOrderItem): array
     {
-        return $this->product;
-    }
+        $currentItem = null;
 
-    public function addProduct(Product $product): self
-    {
-        if (!$this->product->contains($product)) {
-            $this->product[] = $product;
-            $product->setOrderIds($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Product $product): self
-    {
-        if ($this->product->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getOrderIds() === $this) {
-                $product->setOrderIds(null);
+        foreach ($this->orderItem as $orderItem) {
+            if ($newOrderItem->isSame($orderItem)) {
+                $currentItem = $orderItem;
+                break;
             }
         }
 
-        return $this;
+        return $currentItem;
+    }
+
+    public function addOrderItem(OrderItem $newOrderItem): void
+    {
+        $currentItem = $this->getOrderItem($newOrderItem);
+
+        $currentItem->increaseQuantity();
+
+        $currentItemKey = array_search($currentItem, $this->orderItem);
+
+        $this->orderItem[$currentItemKey] = clone $currentItem;
+    }
+
+    public function setOrderItem(array $array): void
+    {
+        $this->orderItem = $array;
+    }
+
+    public function clearOrderItem(): void
+    {
+        $this->orderItem = [];
     }
 
     public function getClientEmail(): ?string
@@ -124,8 +133,8 @@ class Order
         return $this;
     }
 
-    public function getGeneralAmount(int $sum): int
+    public function getUuid(): UuidInterface
     {
-        return $this->quantity * $sum;
+        return $this->uuid;
     }
 }

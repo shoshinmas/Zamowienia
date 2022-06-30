@@ -18,7 +18,7 @@ class AppFixtures extends Fixture
             $product = new Product();
             $product->setName('product '.$i);
             $product->setPrice(mt_rand(10, 100));
-            $product->setVisible(mt_rand(0,1));
+            $product->setVisible(TRUE);
             $manager->persist($product);
         }
         for ($i = 0; $i < 20; $i++) {

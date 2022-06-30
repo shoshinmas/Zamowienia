@@ -10,6 +10,7 @@ class CreateOrderModel
 {
 
     public function __construct(
+        private string $orderUuid,
         private array $id,
         private string $clientEmail,
         private array $quantity,
@@ -19,7 +20,7 @@ class CreateOrderModel
     }
 
 
-    public static function fromRequest(Request $request): self
+    public static function fromRequest(Request $request, string $orderUuid): self
     {
         $id = $_POST['product_id'];
         $quantity = $_POST['product_quantity'];
@@ -31,6 +32,7 @@ class CreateOrderModel
         $clientEmail = $request->get('clientEmail');
 
         return new self(
+            $orderUuid,
             $id,
             $clientEmail,
             $price,
@@ -64,5 +66,8 @@ class CreateOrderModel
         return $this->totalSum;
     }
 
-
+    public function getOrderUuid(): string
+    {
+        return $this->orderUuid;
+    }
 }
