@@ -13,15 +13,17 @@ use App\Repository\OrderRepository;
 
 class DashboardController extends AbstractController
 {
+    public function __construct(
+        private readonly OrderRepository $orderRepository
+    ){
+    }
+
     #[IsGranted('ROLE_USER')]
     #[Route('/admin/dashboard', name: 'admin_dashboard')]
-
-
-    public function index(Environment $twig, OrderRepository $orderRepository): Response
+    public function index(Environment $twig): Response
     {
         return new Response($twig->render('admin/dashboard/index.html.twig', [
-            'controller_name' => 'DashboardController',
-            'orders' => $orderRepository->findAll(),
+            'orders' => $this->orderRepository->findAll(),
         ]));
     }
 }

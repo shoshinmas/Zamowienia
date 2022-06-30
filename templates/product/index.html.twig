@@ -14,14 +14,15 @@
             {% for product in products %}
                 <div class="col-md-4">
                     <div class="card mb-4">
+                        <input type="hidden" class="form-control" id="product.id" name="product.id[]" value="{{ product.id }}">
                         <img src="https://via.placeholder.com/200x150" alt="{{ product.name }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">{{ product.name }}</h5>
                             <div class="d-flex justify-content-between align-item-center">
                                     <div class="form-group">
                                         <div class="form-group">
-                                            <label for="product.id">Quantity</label>
-                                            <input type="number" class="form-control" name="product.id[]" value="0">
+                                            <label for="product.quantity">Quantity</label>
+                                            <input type="number" class="form-control" name="product.quantity[]" value="0">
                                         </div>
                                     </div>
                                 <span class="h5 mt-auto"><input type="text" class="form-control" name="product.price[]" value="{{ product.price }}" size="1" readonly>EUR</span>

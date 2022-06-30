@@ -12,7 +12,9 @@
         <h1>Below, the dashboard with clients' orders: ✅</h1>
 
         {% for order in orders %}
-            <h4>{{ order }}</h4>
+            {{ order.id }}<br>
+            {{ order.totalSUM }}<br>
+            {{ order.clientEmail }}<br><br><br>
         {% endfor %}
     </div>
 {% endblock %}

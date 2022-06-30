@@ -15,10 +15,13 @@ class CreateOrder
     ) {
     }
 
-    public function execute(CreateOrderModel $order): ?int
+    public function execute(CreateOrderModel $orderModel): ?int
     {
         $order = new Order();
-
+        $order->setClientEmail($orderModel->getClientEmail());
+        $order->setTotalSum($orderModel->getTotalSum());
+        $order->setQuantity(5);
+        $order->setStatus('PENDING');
         $this->orderRepository->save($order);
 
         return $order->getId();
