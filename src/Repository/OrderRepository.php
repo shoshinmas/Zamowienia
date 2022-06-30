@@ -34,20 +34,20 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Order[] Returns an array of Order objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('o.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function findByEmail(string $clientEmail): array
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.clientEmail = :clientEmail')
+            ->setParameter('clientEmail', $clientEmail)
+            ->orderBy('o.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     public function findOneByUuid(UuidInterface $uuid): ?Order
     {
