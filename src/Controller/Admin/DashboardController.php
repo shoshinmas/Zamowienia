@@ -23,7 +23,7 @@ class DashboardController extends AbstractController
     public function index(Environment $twig): Response
     {
         return new Response($twig->render('admin/dashboard/index.html.twig', [
-            'orders' => $this->orderRepository->findAll(),
+            'orders' => $this->orderRepository->findBy([], ['clientEmail' => 'ASC']),
         ]));
     }
 }
