@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UseCase;
 
+use App\OrderItem\OrderItem;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,9 +24,12 @@ class CreateOrderModel
 
     public static function fromRequest(Request $request, UuidInterface $orderUuid): self
     {
+        $pName = $_POST['product_name'];
         $id = $_POST['product_id'];
         $quantity = $_POST['product_quantity'];
         $price = $_POST['product_price'];
+        $orderItem = new OrderItem(externalId: $orderUuid, title: $pName, price: $price,quantity: $quantity);
+        var_dump($orderItem);
         $mapped = array_map(function($quantity, $price) { return $quantity * $price;}, $quantity, $price);
 
         $totalSum = 0;
