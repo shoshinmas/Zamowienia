@@ -16,15 +16,16 @@
                     <div class="card mb-4">
                         <img src="https://via.placeholder.com/200x150" alt="{{ product.name }}" class="card-img-top">
                         <div class="card-body">
-                            <h5 class="card-title"><input type="hidden" name="{{ product.name}}[name]" value="{{ product.name }}">{{ product.name }}</h5>
+                            <h5 class="card-title"><input type="hidden" name="orderData{{ product.id }}[id]" value="{{ product.id }}">
+                                <input type="hidden" name="orderData{{ product.id }}[name]" value="{{ product.name }}">{{ product.name }}</h5>
                             <div class="d-flex justify-content-between align-item-center">
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label for="product.quantity">Quantity</label>
-                                            <input type="number" class="form-control" name="{{ product.name}}[quantity]" value="0">
+                                            <input type="number" class="form-control" name="orderData{{ product.id }}[quantity]" value="0">
                                         </div>
                                     </div>
-                                <span class="h5 mt-auto"><input type="text" class="form-control" name="{{ product.name}}[price]" value="{{ product.price }}" size="1" readonly>EUR</span>
+                                <span class="h5 mt-auto"><input type="text" class="form-control" name="orderData{{ product.id }}[price]" value="{{ product.price }}" size="1" readonly>EUR</span>
                             </div>
                         </div>
                     </div>
@@ -36,6 +37,7 @@
                 </div>
             <button class="btn btn-warning" for="submit" class="form-control" name="submit">Order</button>
                 {{ form_end(form) }}
+
         </div>
     </div>
 {% endblock %}

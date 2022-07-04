@@ -7,6 +7,7 @@ namespace App\UseCase;
 use App\OrderItem\OrderItem;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\Request;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
 class CreateOrderModel
 {
@@ -24,16 +25,23 @@ class CreateOrderModel
 
     public static function fromRequest(Request $request, UuidInterface $orderUuid): self
     {
-        $pName = $_POST['product_name'];
-        $id = $_POST['product_id'];
-        $quantity = $_POST['product_quantity'];
-        $price = $_POST['product_price'];
-        $orderItem = new OrderItem(externalId: $orderUuid, title: $pName, price: $price,quantity: $quantity);
-        var_dump($orderItem);
-        $mapped = array_map(function($quantity, $price) { return $quantity * $price;}, $quantity, $price);
+//        $pName = $request->request->get('product_name');
+//        $id = $request->request->get('product_id');
+//        $quantity = $request->request->get('product_quantity');
+//        $price = $request->request->get('product_price');
+        $requestedArrayLength = count($request->request->getIterator()) - 3;
+        $requestedArray = $request->request->getIterator();
+        for ($i=1; $i<= $requestedArrayLength; $i++)
+        {
+
+        }
+        dd($requestedArray);
+
+
+        //$mapped = array_map(function($quantity, $price) { return $quantity * $price;}, $quantity, $price);
 
         $totalSum = 0;
-        foreach($mapped as $sum) { $totalSum += $sum;}
+        //foreach($mapped as $sum) { $totalSum += $sum;}
         $clientEmail = $request->get('clientEmail');
 
         return new self(
