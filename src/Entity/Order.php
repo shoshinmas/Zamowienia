@@ -20,25 +20,25 @@ class Order
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(name: "uuid", type: "uuid", unique: true, nullable: true)]
     private UuidInterface $uuid;
 
     #[ORM\Column(type: 'integer')]
-    private $totalSum;
+    private int $totalSum;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $status;
+    private string $status;
 
     #[ORM\Column(type: 'integer')]
-    private $quantity;
+    private int $quantity;
 
     #[ORM\Column(name: "orderitem", type: 'array', nullable: true)]
-    private $orderItem = [];
+    private array $orderItem = [];
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $clientEmail;
+    private string $clientEmail;
 
     public function __construct()
     {

@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Environment;
 use App\Repository\OrderRepository;
 
 class DashboardController extends AbstractController
@@ -20,10 +19,10 @@ class DashboardController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/admin/dashboard', name: 'admin_dashboard')]
-    public function index(Environment $twig): Response
+    public function index(): Response
     {
-        return new Response($twig->render('admin/dashboard/index.html.twig', [
-            'orders' => $this->orderRepository->findBy([], ['clientEmail' => 'ASC']),
-        ]));
+        return $this->render('admin/dashboard/index.html.twig', [
+            'orders' => $this->orderRepository->findByEmail('clientEmail'),
+        ]);
     }
 }

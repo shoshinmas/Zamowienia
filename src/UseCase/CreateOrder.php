@@ -7,6 +7,7 @@ namespace App\UseCase;
 use App\OrderItem\OrderItem;
 use App\Entity\Order;
 use App\Repository\OrderRepository;
+use App\Service\MailerService;
 use Ramsey\Uuid\UuidInterface;
 
 class CreateOrder
@@ -25,6 +26,7 @@ class CreateOrder
         $order->setTotalSum($orderModel->getTotalSum());
         $order->setQuantity(1);
         $order->setStatus('PENDING');
+        MailerService::class->sendEmailOnOrder($orderModel->getClientEmail(), $uuid);
         $this->orderRepository->save($order);
         //$orderItem = new OrderItem($order->getUuid(), $order->getClientEmail(), $order->getTotalSum());
 

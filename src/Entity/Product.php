@@ -13,19 +13,19 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'string')]
-    private $name;
+    private string $name;
 
     #[ORM\Column(type: 'integer')]
-    public $price;
+    public int $price;
 
     #[ORM\Column(type: 'boolean')]
-    private $visible = TRUE;
+    private bool $visible = TRUE;
 
     #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'product')]
-    private $orderIds;
+    private int $orderIds;
 
     public function getId(): ?int
     {

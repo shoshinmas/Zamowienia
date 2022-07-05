@@ -43,7 +43,6 @@ class OrderRepository extends ServiceEntityRepository
             ->andWhere('o.clientEmail = :clientEmail')
             ->setParameter('clientEmail', $clientEmail)
             ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
