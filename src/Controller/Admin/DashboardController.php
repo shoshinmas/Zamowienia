@@ -17,12 +17,11 @@ class DashboardController extends AbstractController
     ){
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/admin/dashboard', name: 'admin_dashboard')]
     public function index(): Response
     {
         return $this->render('admin/dashboard/index.html.twig', [
-            'orders' => $this->orderRepository->findByEmail('clientEmail'),
+            'orders' => $this->orderRepository->findBy([], ['clientEmail' => 'ASC']),
         ]);
     }
 }

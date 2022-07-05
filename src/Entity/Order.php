@@ -143,6 +143,4 @@ class Order
         $this->uuid = $uuid;
         return $this;
     }
-
-
 }

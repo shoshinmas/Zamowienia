@@ -15,8 +15,7 @@ class CreateOrderModel
     public function __construct(
         private UuidInterface $orderUuid,
         private string $clientEmail,
-        private int $quantity,
-        private int $price,
+        array $items,
         private int $totalSum
     ) {
     }
@@ -24,30 +23,28 @@ class CreateOrderModel
 
     public static function fromRequest(Request $request, UuidInterface $orderUuid): self
     {
-//        $pName = $request->request->get('product_name');
-//        $id = $request->request->get('product_id');
-//        $quantity = $request->request->get('product_quantity');
-//        $price = $request->request->get('product_price');
-        $requestedArrayLength = count($request->request->getIterator()) - 3;
-        $requestedArray = $request->request->getIterator();
-        for ($i=1; $i<= $requestedArrayLength; $i++)
+        $totalSum = 1;
+        $items = [];
+        $products = $request->request->all()['orderData'];
+        foreach($products as $product)
         {
-            echo $requestedArray->key();
-        }
+            if((int)($product['quantity'])>0) {
+                $orderItems = new OrderItem(
+                    $orderUuid,
+                    $product['name'],
+                    (int)$product['price'],
+                    (int)$product['quantity']);
+                $totalSum += $orderItems->getGeneralAmount();
+                $items[] = $orderItems;
+            }
+        };
 
-
-
-        //$mapped = array_map(function($quantity, $price) { return $quantity * $price;}, $quantity, $price);
-
-        $totalSum = 0;
-        //foreach($mapped as $sum) { $totalSum += $sum;}
         $clientEmail = $request->get('clientEmail');
 
         return new self(
             $orderUuid,
             $clientEmail,
-            25,
-            25,
+            $items,
             $totalSum
         );
     }

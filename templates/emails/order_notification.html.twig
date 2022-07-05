@@ -1,5 +1,8 @@
+{% extends 'base.html.twig' %}
+{% block body %}
 Hey! Your order ID {{ id }} is ready. Click on the link below to check the data
 
 {% block action %}
-    <a href="{{ path }}/order/{{ id }}">Check your order<a>
+    <a href="{{ order_domain }}{{ id }}">Check your order<a>
+{% endblock %}
 {% endblock %}

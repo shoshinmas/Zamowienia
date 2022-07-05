@@ -23,13 +23,13 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     private string $username;
 
     #[ORM\Column(type: 'json')]
-    private $roles = [];
+    private array $roles = [];
 
     #[ORM\Column(type: 'string')]
     private string $password;
 
     #[ORM\Column(type: 'boolean')]
-    private bool $isVerified = false;
+    private bool $isVerified = true;
 
     public function getId(): ?int
     {

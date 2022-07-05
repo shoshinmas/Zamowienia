@@ -44,4 +44,9 @@ class OrderItem
     {
         return $this->title;
     }
+
+    public function getGeneralAmount(): int
+    {
+        return $this->quantity * $this->price;
+    }
 }
