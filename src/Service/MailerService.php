@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
-use App\Repository\OrderRepository;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Bridge\Twig\Mime\NotificationEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\MailerInterface;
@@ -15,7 +17,7 @@ class MailerService extends AbstractController
     {
     }
 
-    public function sendEmailOnOrder(string $clientEmail, string $uuidExternalId)
+    public function sendEmailOnOrder(string $clientEmail, UuidInterface $uuidExternalId)
     {
         $this->mailer->send((new NotificationEmail())
             ->subject('New order')
@@ -24,5 +26,4 @@ class MailerService extends AbstractController
             ->to($clientEmail)
             ->context(['id'=>$uuidExternalId]));
     }
-
 }

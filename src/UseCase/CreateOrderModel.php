@@ -14,10 +14,9 @@ class CreateOrderModel
 
     public function __construct(
         private UuidInterface $orderUuid,
-        private array $id,
         private string $clientEmail,
-        private array $quantity,
-        private array $price,
+        private int $quantity,
+        private int $price,
         private int $totalSum
     ) {
     }
@@ -33,9 +32,9 @@ class CreateOrderModel
         $requestedArray = $request->request->getIterator();
         for ($i=1; $i<= $requestedArrayLength; $i++)
         {
-
+            echo $requestedArray->key();
         }
-        dd($requestedArray);
+
 
 
         //$mapped = array_map(function($quantity, $price) { return $quantity * $price;}, $quantity, $price);
@@ -46,10 +45,9 @@ class CreateOrderModel
 
         return new self(
             $orderUuid,
-            $id,
             $clientEmail,
-            $price,
-            $quantity,
+            25,
+            25,
             $totalSum
         );
     }
